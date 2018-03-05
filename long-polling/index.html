@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+<button onclick="fetchData()">Fetch data</button>
+
+<script>
+	let target = 2000;
+	function fetchData() {
+		fetch(`http://localhost/long-polling/get-data.php?target=${target}`).then(b => b.json()).then(response => {
+			console.log('response', response);
+			target += response;
+			fetchData();
+		});
+	}
+</script>
+</body>
+</html>
