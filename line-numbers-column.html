@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		#content {
+			outline: none;
+		}
+
+		#content div {
+			counter-increment: id +1;
+		}
+
+		#content div:before {
+			padding: 0 10px 0 5px;
+			content: counter(id);
+		}
+	</style>
+</head>
+<body>
+	<div id="content" contenteditable="true">
+		<div></div>
+	</div>
+</body>
+</html>
