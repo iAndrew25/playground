@@ -8,7 +8,8 @@
 	flex-wrap: wrap;
 }
 
-nav {
+nav, 
+menu {
 	display: flex;
 	background-color: yellowgreen;
 	justify-content: flex-end;
@@ -16,8 +17,20 @@ nav {
 	flex: 100%;
 }
 
+menu {
+	display: none;
+}
+
 span {
 	padding: 10px;
+}
+
+#display-menu {
+	display: none;
+}
+
+input[type=checkbox]:checked ~ nav {
+	display: flex;
 }
 
 section {
@@ -56,6 +69,12 @@ footer {
 	}
 
 	nav {
+		display: none;
 		flex-direction: column;
+	}
+
+	menu {
+		display: flex;
+		justify-content: flex-end;
 	}
 }
