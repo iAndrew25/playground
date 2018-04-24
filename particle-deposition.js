@@ -1,112 +1,45 @@
-function printIt(mx) {
-	let parsedMx = '';
-	for (let i = 0; i < mx.length; i++) {
-		for (let j = 0; j < mx[0].length; j++) {
-			parsedMx += mx[i][j] + ' ';
+function printIt(map, MAP_WIDTH) {
+	let parsedMap = '';
+	for (let i = 0; i < map.length; i++) {
+		parsedMap += map[i].x + '' + map[i].y + '  ';
+		if((i+1) % MAP_WIDTH === 0) {
+			parsedMap += '\n';
 		}
-		parsedMx += '\n';
 	}
 
-	console.log(parsedMx);
+	console.log(parsedMap);
 }
 
 
+function getIndex(cols, rows) {
+	return rows * MAP_WIDTH + cols;
+}
 
-const compose = (...fns) => fns.reverse().reduce((prevFn, nextFn) => value => nextFn(prevFn(value)), value => value);
+function getCoords(i, MAP_WIDTH) {
+	return {
+		x: i % MAP_WIDTH,
+		y: Math.floor(i / MAP_WIDTH)
+	}
+}
 
-const isStable = arr => arr.every(item => item.value )
-
-
-
-
-
-
-const adjacentNeighbours = ({x, y}, map) => [
-	map[x]&&map[x][y+1], 
-	map[x]&&map[x][y-1], 
-	map[x+1]&&map[x+1][y], 
-	map[x-1]&&map[x-1][y], 
-];
-
-
-
-
-//const allNeighbours = ({x, y}, map) => 
-
-
-const isEdge = (x, y, map) => ![
-	map[x]&&map[x][y+1], 
-	map[x]&&map[x][y-1], 
-	map[x+1]&&map[x+1][y], 
-	map[x-1]&&map[x-1][y], 
-	map[x-1]&&map[x-1][y-1], 
-	map[x+1]&&map[x+1][y-1], 
-	map[x+1]&&map[x+1][y+1], 
-	map[x-1]&&map[x-1][y-1]
-].some(Boolean);
-
-const isStable = (x, y, map) => [
-	map[x]&&map[x][y+1], 
-	map[x]&&map[x][y-1], 
-	map[x+1]&&map[x+1][y], 
-	map[x-1]&&map[x-1][y], 
-	map[x-1]&&map[x-1][y-1], 
-	map[x+1]&&map[x+1][y-1], 
-	map[x+1]&&map[x+1][y+1], 
-	map[x-1]&&map[x-1][y-1]
-].every(i => map[x][y] <= i);
-
-
-
-const neighbours = (x, y, map) => [
-	map[x]&&map[x][y+1], 
-	map[x]&&map[x][y-1], 
-	map[x+1]&&map[x+1][y], 
-	map[x-1]&&map[x-1][y], 
-	map[x-1]&&map[x-1][y-1], 
-	map[x+1]&&map[x+1][y-1], 
-	map[x+1]&&map[x+1][y+1], 
-	map[x-1]&&map[x-1][y-1]
+const adjacentNeighbours = (x, y, map) => [
+	map[getIndex(x, y+1)], 
+	map[getIndex(x, y-1)], 
+	map[getIndex(x+1, y)],
+	map[getIndex(x-1, y)]
 ].filter(Boolean);
-
-
-let i = 0;
-function buildMap(map, x, y) {
-	if(i === 10) return;
-	map[x][y] = typeof map[x][y] === "number" ? map[x][y] + 1 : 0;
-	if(isStable(x, y, map)) {
-		buildMap(map, x, y);
-	} else {
-		map[x][y+1] = typeof map[x][y+1] === "number" ? map[x][y+1] + 1 : 0;
-		buildMap(map, x, y);
-	}
-	i++;
-	console.log(map);
-}
-
-
-
 
 const generateEmptyMap = (height, width) => {
 	return Array(height).fill(null).reduce((total, v, x) => [...total, ...Array(width).fill(null).reduce((total, v, y) => [...total, {x, y, value: 0}], [])], []);
 }
 
 
-
-
-
-
-
+const MAP_WIDTH = 3,
+	MAP_HEIGHT = 3,
+	MAP = generateEmptyMap(MAP_HEIGHT, MAP_WIDTH);
 
 const randomBetween = (max, min = 0) => Math.floor(Math.random() * max) + min;
 
-function generateMap(width, height) {
-	let map = Array(height).fill('-').map(() => Array(width).fill('-'));
-	let x = randomBetween(width),
-		y = randomBetween(height);
+printIt(MAP, MAP_WIDTH);
 
-
-	buildMap(map, x, y)
-}
-
-printIt(generateMap(10, 10))
+console.log(adjacentNeighbours(1, 2, MAP));
