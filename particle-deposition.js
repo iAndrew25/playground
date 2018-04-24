@@ -21,13 +21,21 @@ const isEdge = (x, y, map) => ![
 	map[x-1]&&map[x-1][y-1]
 ].some(Boolean);
 
+const isStable = (x, y, mx) => [
+	mx[x]&&mx[x][y+1], 
+	mx[x]&&mx[x][y-1], 
+	mx[x+1]&&mx[x+1][y], 
+	mx[x-1]&&mx[x-1][y], 
+	mx[x-1]&&mx[x-1][y-1], 
+	mx[x+1]&&mx[x+1][y-1], 
+	mx[x+1]&&mx[x+1][y+1], 
+	mx[x-1]&&mx[x-1][y-1]
+].every(i => mx[x][y] - 1 === i);
+
 const randomBetween = (max, min = 0) => Math.floor(Math.random() * max) + min;
 
 function generateMap(width, height) {
 	let map = Array(height).fill('-').map(() => Array(width).fill('-'));
 	let x = randomBetween(width),
 		y = randomBetween(height);
-
-	
-
 }
