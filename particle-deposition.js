@@ -11,7 +11,7 @@ function printIt(map, MAP_WIDTH) {
 }
 
 
-function getIndex(cols, rows) {
+function getIndex(rows, cols) {
 	return rows * MAP_WIDTH + cols;
 }
 
@@ -42,4 +42,4 @@ const randomBetween = (max, min = 0) => Math.floor(Math.random() * max) + min;
 
 printIt(MAP, MAP_WIDTH);
 
-console.log(adjacentNeighbours(1, 2, MAP));
+console.log(adjacentNeighbours(0, 1, MAP));
